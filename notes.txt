@@ -1,0 +1,25 @@
+Notes:
+
+PINS used so far:
+    
+    OUTPUT:
+        GPIO
+            simple for LED - 
+            pin = RPi.GPIO.setup(number, GPIO.OUT)
+            GPIO.output(number, GPIO.HIGH or GPIO.LOW)
+        PWD 
+            need for Pulse Width Modulation for Servo
+            pwm = RPi.GPIO.PWM(number, frequency)
+            pwm.ChangeDutyCycle(duty)
+            Can also use gpiozero.Servo class
+
+
+    INPUT:
+        I2C Bus Protocol https://en.wikipedia.org/wiki/I%C2%B2C:
+        https://www.robot-electronics.co.uk/i2c-tutorial
+            i2c = busio.I2C(board.SCL,board.SDA)
+            Half Duplex
+
+
+Thonny:
+    Very useful setting to open all files from previous session
