@@ -1,3 +1,8 @@
+'''
+Testing a servo motor, which uses Pulse Width Modulation (PWM) in two ways
+- directly using a GPIO PWM output pin and setting the duty cycle
+- using the gpiozero library which has a Servo object
+'''
 import RPi.GPIO as GPIO
 from time import sleep
 from gpiozero import Servo

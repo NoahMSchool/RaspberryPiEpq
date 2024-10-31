@@ -1,3 +1,6 @@
+'''
+A very simple test of an LED strip
+'''
 import RPi.GPIO as GPIO
 import time
 

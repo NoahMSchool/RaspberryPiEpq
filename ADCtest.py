@@ -1,3 +1,6 @@
+'''
+Simple test of the Analog To Digital Converter using 2 potentiometers
+'''
 import board
 import busio
 import time
