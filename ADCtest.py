@@ -22,10 +22,9 @@ ads = ADS.ADS1115(i2c,address=0x4a)
 ads.gain = 1
 
 ch0 = AnalogIn(ads, ADS.P0)
-ch1 = AnalogIn(ads, ADS.P1)
 
 while True:
-        print(f"Voltage: {ch0.voltage}V {ch1.voltage}V ")
+        print(f"Voltage: {ch0.voltage}V")
         time.sleep(0.5)
 print("hello")
 
