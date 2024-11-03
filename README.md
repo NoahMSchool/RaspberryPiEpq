@@ -5,19 +5,27 @@
 ### Basic GPIO outputs
 
 ```python
-pin = RPi.GPIO.setup(number, GPIO.OUT)
-GPIO.output(number, GPIO.LOW)  # Send a 0 or Low Signal
-GPIO.output(number, GPIO.HIGH) # Send a 1 or High Signal
+pin = RPi.GPIO.setup(pin_number, GPIO.OUT)
+GPIO.output(pin_number, GPIO.LOW)  # Send a 0 or Low Signal
+GPIO.output(pin_number, GPIO.HIGH) # Send a 1 or High Signal
 ```
 
 ### Servos and Pulse Width Modulation Output
 
 Need for Pulse Width Modulation for Servo
 ```python
-pwm = RPi.GPIO.PWM(number, frequency)
+pwm = RPi.GPIO.PWM(pin_number, frequency)
 pwm.ChangeDutyCycle(duty)
 ```   
-I also found a utility class ```gpiozero.Servo``` class
+I also found a utility class ```gpiozero.Servo``` class.
+https://gpiozero.readthedocs.io/en/stable/api_output.html
+Note that my Servo needed a range of 500 to 2500 microseconds
+
+```python
+from gpiozero import Servo
+servo = Servo(pin_number, initial_value = 0, min_pulse_width = 0.5/1000, max_pulse_width = 2.5/1000)
+servo.value = v # Between -1 and 1 for a 180 degree movement range
+```
 
 ### Potentiometers, Analog to Digital Converters and the I2C Protocol
 I learned there was 3 different Bus Protocols - UART, SPI and I2C
