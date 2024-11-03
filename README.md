@@ -29,6 +29,7 @@ servo.value = v # Between -1 and 1 for a 180 degree movement range
 
 ### Potentiometers, Analog to Digital Converters and the I2C Protocol
 I learned there was 3 different Bus Protocols - UART, SPI and I2C
+The busio library controls these: https://pypi.org/project/ADS1x15-ADC/
 
 I2C Bus Protocol https://en.wikipedia.org/wiki/I%C2%B2C:
 https://www.robot-electronics.co.uk/i2c-tutorial
@@ -40,6 +41,7 @@ import busio
 i2c = busio.I2C(board.SCL,board.SDA)
 ```
 I bought some ADS1115 Analog to Digital Converters
+Documentation here: https://pypi.org/project/ADS1x15-ADC/
 
 ```python
 import adafruit_ads1x15.ads1115 as ADS
