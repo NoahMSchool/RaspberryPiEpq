@@ -84,3 +84,26 @@ I created a circuit that used:
 - The ADC was wired into the Raspberry Pi IDC pins
 - Each servo had a Pulse Width Modulation Output Pin going into it
 The program simply had a loop that read the voltages of the ADC inputs (range of 0-3.3 V), and set the pulse widths to match (range of -1 to 1) using a map and clamp function I created
+
+## Setting up mac with raspberry Pi
+### Working directly on the raspeberry pi
+In the beggining I was working directly on the raspberry pi plugging a monitor, mouse and keyboard into the raspberry pi's ports. Using this I can control the raspberry pi with my mouse and keyboard.
+I was using the thonny editor on the raspberry pi. This was tedius because of all the setup every time. It was also very slow and difficult to type with with the lag.
+
+I wanted to try to set it up so I can connect remotely to the rasperry pi.
+In order to do this I needed to:
+* allow SSH to the raspberry pi
+* connect the raspeberry pi to the same network as the computer
+* mount the raspberry pi drive on my mac using macFuse and SSHFS
+
+### Enabling SSH
+SSH stands for secure shell which needs to be running on the raspberry pi so other computers can connect to it, I turned this on on the raspberry pi settings
+
+```
+ssh admin@192.168.86.250 "python3 /home/admin/src/RaspberryPiEpq/simpleLED.py"
+
+```
+### Mounting the drive
+```
+sshfs admin@192.168.86.250:/home/admin ~/mnt/pi -o reconnect,allow_other
+```
