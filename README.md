@@ -86,6 +86,7 @@ I created a circuit that used:
 The program simply had a loop that read the voltages of the ADC inputs (range of 0-3.3 V), and set the pulse widths to match (range of -1 to 1) using a map and clamp function I created
 
 ## Setting up mac with raspberry Pi
+
 ### Working directly on the raspeberry pi
 In the beggining I was working directly on the raspberry pi plugging a monitor, mouse and keyboard into the raspberry pi's ports. Using this I can control the raspberry pi with my mouse and keyboard.
 I was using the thonny editor on the raspberry pi. This was tedius because of all the setup every time. It was also very slow and difficult to type with with the lag.
@@ -99,11 +100,36 @@ In order to do this I needed to:
 ### Enabling SSH
 SSH stands for secure shell which needs to be running on the raspberry pi so other computers can connect to it, I turned this on on the raspberry pi settings
 
-```
-ssh admin@192.168.86.250 "python3 /home/admin/src/RaspberryPiEpq/simpleLED.py"
+If we create a public/private key pair we can SSH without need the password every time
+On your Mac, generate an SSH key (if you don’t already have one):
+```ssh-keygen -t rsa -b 4096 -C "your_email@example.com"```
+
+Copy the key to the Raspberry Pi:
+```ssh-copy-id admin@192.168.86.250```
+
+This saves your public key on the Pi so you don’t have to type a password.
+Now, SSH without a password!
+ssh admin@192.168.86.250
+
+```ssh admin@192.168.86.250 "python3 /home/admin/src/RaspberryPiEpq/simpleLED.py"```
+
+### Mounting the drive
+```sshfs admin@192.168.86.250:/home/admin ~/mnt/pi -o reconnect,allow_other```
+
+Unmounting
+```umount ~/mnt/pi``` 
+
+### Creating a Build System in Sublime Text
+
+In Sublime Text, you can create a build system that runs your own commands when you press Cmd^B
+
+In my setup this will run the current python file
 
 ```
-### Mounting the drive
+    "shell_cmd": "ssh admin@192.168.86.250 \"python3 /home/admin/src/RaspberryPiEpq/${file_name}\"",
+    "working_dir": "$file_path",
+    "selector": "source.python"
+}
+
 ```
-sshfs admin@192.168.86.250:/home/admin ~/mnt/pi -o reconnect,allow_other
-```
+
