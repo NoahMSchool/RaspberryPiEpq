@@ -1,5 +1,13 @@
 # RaspberryPiEpq
 
+## Functions of the Robot Arm to consider
+* Methods of control
+** Direct control of servos and magnet on the Breadboard (potentiometer and buttons)
+
+
+### Out of scope for the project
+* Vision to detect where they are?
+
 ## Simple Component Tests:
 
 ### Basic GPIO outputs
@@ -68,6 +76,7 @@ In the beginning, the base of the model wouldn't print. The main issue was that 
 * cleaning the nozzle. I replaced it and put it back
 * changing the temperature of the nozzle and the bed for the PLA
 In the end, the thing that seems to help the most was increasing the thickness of the first layer from 0.2mm to 0.4mm
+
 
 ## Assembling the model
 ### Learning about RCA plugs
