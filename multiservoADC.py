@@ -42,6 +42,26 @@ def testdetach(servos):
     for s in servos:
         s.detach()
 
+def setposition(servos, position):
+    for i in range(len(servos)-1):
+        s= servos[i]
+        s.value = position[i]
+    
+def getposition(servos):
+    positions = []
+    for s in servos:
+        positions.append(s.value)
+    return positions
+
+def saveposition(servos, l):
+    l.append(getposition(servos))
+
+def cycleposition(servos, positions):
+    setposition(servos, positions[0])
+
+currentpos = 0
+saved_positions = []
+
 max_pot_volt = 3.3
 min_pot_volt = 0.0
 
@@ -79,7 +99,13 @@ while True:
             testdelta(servos, -0.1)
         if keyboard.read_key() == "0":
             testdetach(servos)
-        
+        if keyboard.read_key() == "s":
+            saveposition(servos, saved_positions)
+        if keyboard.read_key() == "p":
+            print(saved_positions)
+        if keyboard.read_key() == "c":
+            cycleposition(servos, saved_positions)
+                
         '''
         servo0.value = map(pot0.voltage, max_pot_volt, min_pot_volt, -1, 1)
         servo1.value = map(pot1.voltage, max_pot_volt, min_pot_volt, -1, 1)
