@@ -43,5 +43,5 @@ def GPIOtest(servopin):
     GPIO.cleanup()
 
 
-testPin = 12
-GPIOtest(12)
+testPin = 13
+GPIOtest(testPin)
