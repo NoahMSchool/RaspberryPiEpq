@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pigpio
 from aiohttp import web
+import aiohttp_cors
 
 from time import sleep
 
@@ -84,6 +85,21 @@ servomiddle = Servo(
 app = web.Application()
 servos_route = app.router.add_get("/servos", servos)
 magnet_route = app.router.add_get("/magnet", magnet)
+
+cors = aiohttp_cors.setup(app, defaults={
+    # Allow everything (for quick LAN testing). Lock down later.
+    "*": aiohttp_cors.ResourceOptions(
+        allow_credentials=False,
+        expose_headers="*",
+        allow_headers=("Content-Type", "Authorization"),
+        allow_methods=("GET", "OPTIONS"),
+        max_age=86400,
+    )
+})
+
+# Attach CORS to each route
+cors.add(servos_route)
+cors.add(magnet_route)
 
 
 web.run_app(app, host="0.0.0.0", port=8080)
