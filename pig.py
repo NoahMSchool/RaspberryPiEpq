@@ -3,8 +3,13 @@ import pigpio
 from aiohttp import web
 
 from time import sleep
-from gpiozero import Servo
 
+from gpiozero import LED
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+
+magnet_pin = 26
+led = LED(magnet_pin)
 pi = pigpio.pi()
 if not pi.connected:
     raise SystemExit("pigpio not running?")
@@ -19,8 +24,11 @@ def set_servo_degrees(servo, degrees):
 
 async def magnet(request):
     print("magnet")
-
     status = request.query.get("status", "off")
+    if status == "off":
+        led.off()
+    else:
+        led.on()
     print(status)
     peer = request.transport.get_extra_info("peername")
     print(peer)
@@ -55,24 +63,28 @@ sg90_min = 700/1000000
 sg90_max = 2500/1000000
 
 servobase = Servo(
-    baseservopin, 
+    baseservopin,
     initial_value = 0, 
     min_pulse_width = sg90_min, 
-    max_pulse_width = sg90_max
+    max_pulse_width = sg90_max,
+    pin_factory = PiGPIOFactory()
+
     )
 
 servomiddle = Servo(
     middleservopin, 
     initial_value = 0, 
     min_pulse_width = sg90_min, 
-    max_pulse_width = sg90_max
+    max_pulse_width = sg90_max,
+    pin_factory = PiGPIOFactory()
     )
 
 
 
 app = web.Application()
-app.router.add_get("/servos", servos)
-app.router.add_get("/magnet", magnet)
+servos_route = app.router.add_get("/servos", servos)
+magnet_route = app.router.add_get("/magnet", magnet)
+
 
 web.run_app(app, host="0.0.0.0", port=8080)
 
