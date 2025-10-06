@@ -41,45 +41,65 @@ async def magnet(request):
 
 
 async def servos(request):
-    base_angle = float(request.query.get("base_angle","0"))
-    middle_angle = float(request.query.get("middle_angle","0"))
+    turntable = float(request.query.get("turntable","0"))
+    seg_1 = float(request.query.get("seg_1","0"))
+    seg_2 = float(request.query.get("seg_2","0"))
     
     #print(request.query)
     try:
-        set_servo_degrees(servobase,base_angle)
-        set_servo_degrees(servomiddle,middle_angle)
+        set_servo_degrees(servo_turn,turntable)
+        set_servo_degrees(servo_1,seg_1)
+        set_servo_degrees(servo_2,seg_2)
         return web.json_response({
             "ok": True, 
-            "base_angle": base_angle,
-            "middle_angle": middle_angle
+            "turntable": turntable,
+            "seg_1": seg_1,
+            "seg_2": seg_2
+
+
         })
 
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=400)
 
-baseservopin = 12
-middleservopin = 13
+turntable_pin = 13
+seg_1_pin = 12
+seg_2_pin = 18
 
 sg90_min = 700/1000000
 sg90_max = 2500/1000000
 
-servobase = Servo(
-    baseservopin,
+MG996R_min = 700/1000000
+MG996R_max = 2500/1000000
+
+MG92B_min = 700/1000000
+MG92B_max = 2500/1000000
+
+
+servo_turn = Servo(
+    turntable_pin,
     initial_value = 0, 
-    min_pulse_width = sg90_min, 
-    max_pulse_width = sg90_max,
+    min_pulse_width = MG996R_min, 
+    max_pulse_width = MG996R_max,
     pin_factory = PiGPIOFactory()
 
     )
 
-servomiddle = Servo(
-    middleservopin, 
+servo_1 = Servo(
+    seg_1_pin, 
     initial_value = 0, 
-    min_pulse_width = sg90_min, 
-    max_pulse_width = sg90_max,
+    min_pulse_width = MG996R_min, 
+    max_pulse_width = MG996R_max,
     pin_factory = PiGPIOFactory()
     )
 
+servo_2 = Servo(
+    seg_2_pin, 
+    initial_value = 0, 
+    min_pulse_width = MG92B_min, 
+    max_pulse_width = MG92B_max,
+    pin_factory = PiGPIOFactory()
+    )
 
 
 app = web.Application()
