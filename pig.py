@@ -10,7 +10,13 @@ from gpiozero import Servo
 from gpiozero.pins.pigpio import PiGPIOFactory
 
 magnet_pin = 26
-led = LED(magnet_pin)
+activity_pin = 6
+ready_pin = 5
+
+magnet_led = LED(magnet_pin)
+activity_led = LED(activity_pin)
+ready_led = LED(ready_pin)
+
 pi = pigpio.pi()
 if not pi.connected:
     raise SystemExit("pigpio not running?")
@@ -24,15 +30,15 @@ def set_servo_degrees(servo, degrees):
 
 
 async def magnet(request):
-    print("magnet")
+    activity_led.blink(on_time=0.05, off_time=.05, n=1, background=True)
     status = request.query.get("status", "off")
     if status == "off":
-        led.off()
+        magnet_led.off()
     else:
-        led.on()
+        magnet_led.on()
     print(status)
-    peer = request.transport.get_extra_info("peername")
-    print(peer)
+    #peer = request.transport.get_extra_info("peername")
+    #print(peer)
 
     try:
         return web.json_response({"ok": True, "message": "Magnet Toogle"})
@@ -41,6 +47,7 @@ async def magnet(request):
 
 
 async def servos(request):
+    activity_led.blink(on_time=0.05, off_time=.05, n=1, background=True)
     turntable = float(request.query.get("turntable","0"))
     seg_1 = float(request.query.get("seg_1","0"))
     seg_2 = float(request.query.get("seg_2","0"))
@@ -121,6 +128,8 @@ cors = aiohttp_cors.setup(app, defaults={
 cors.add(servos_route)
 cors.add(magnet_route)
 
-
+print("Starting Web Server")
+ready_led.on()
 web.run_app(app, host="0.0.0.0", port=8080)
-
+ready_led.off()
+print("All done")
