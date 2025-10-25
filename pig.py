@@ -41,7 +41,7 @@ async def magnet(request):
     #print(peer)
 
     try:
-        return web.json_response({"ok": True, "message": "Magnet Toogle"})
+        return web.json_response({"ok": True, "message": "Magnet " + status})
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=400)
 
@@ -76,10 +76,10 @@ seg_2_pin = 18
 sg90_min = 700/1000000
 sg90_max = 2500/1000000
 
-MG996R_min = 700/1000000
-MG996R_max = 2500/1000000
+MG996R_min = 1000/1000000
+MG996R_max = 2300/1000000
 
-MG92B_min = 700/1000000
+MG92B_min = 650/1000000
 MG92B_max = 2500/1000000
 
 
