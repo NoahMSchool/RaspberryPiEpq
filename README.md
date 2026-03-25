@@ -1,5 +1,22 @@
 # RaspberryPiEpq
 
+# Godot Robot Arm Sim
+
+This is the Godot simulation for the Robot Arm Kit. It aims to mirror a real robot arm you can 3D print. It keeps to the theme of making it modular. 
+You can change different parameters of the arm so it can be used for arms of different sizes and preview them in the editor as I am using editor scripts. 
+
+##Images
+
+
+## Linked Reposotories
+Godot simulation of the arm that keeps to the modular nature of this project. 
+https://github.com/NoahMSchool/RobotArmSimGodot
+
+## 3D modular model in OpenSCAD
+https://github.com/NoahMSchool/RobotArmEPQ
+
+
+
 ## Functions of the Robot Arm to consider
 * Methods of control
 ** Direct control of servos and magnet on the Breadboard (potentiometer and buttons)
